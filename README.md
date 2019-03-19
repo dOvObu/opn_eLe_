@@ -3,6 +3,9 @@ shortcuts for glew, glfw and soil2
 
 ## getting started snippent
 ```cpp
+#include "opn.h"
+#include <cmath>
+
 int main ()
 {
 	opnWindow win ("hi", 800, 600);
@@ -10,6 +13,9 @@ int main ()
 	opnFreeCamera cam;
 	opnProfileCamera cam2;
 	defaultSettings (win, &cam, &cam2);
+		
+	opnShader shad ("core.vert", "core.frag");
+	opnBox box (shad,"img2.png");
 	
 	opnMat4 view, projection;
 	win.setPerspective (projection);
@@ -24,7 +30,12 @@ int main ()
 		opnInput::process (win);
 		currentCamera->loadTo (view);
 
+		box.tr.rotate (t, 0.5f+std::sinf(t), 1, -1);
+		
 		win.clear (0.95f, 0.95f, 0.95f);
+		shad.use ();
+		shad.viewAndProjection (view, projection);
+		box.draw ();
 		win.swap ();
 	}
 	return 0;
