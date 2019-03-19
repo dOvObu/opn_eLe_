@@ -2,7 +2,7 @@
 shortcuts for glew, glfw and soil2
 
 ## getting started snippent
-### main.cpp
+###### main.cpp
 ```cpp
 #include "opn.h"
 #include <cmath>
@@ -43,7 +43,7 @@ int main ()
 }
 ```
 
-### core.vert
+###### core.vert
 ```glsl
 #version 330 core
 layout (location = 0) in vec3 position;
@@ -62,7 +62,7 @@ void main()
 }
 ```
 
-### core.frag
+###### core.frag
 ```glsl
 #version 330 core
 in vec2 TexCoord;
