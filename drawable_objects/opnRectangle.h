@@ -1,33 +1,34 @@
 #ifndef OPNRECTANGLE_H
 #define OPNRECTANGLE_H
 
-#include "../opnMat4.h"
-#include "../opnShader.h"
+#include "../drawable_objects/opnMat4.h"
+#include "../drawable_objects/opnShader.h"
+#include "opnQuad.h"
 
+// flash-like rectangles
 class opnRectangle
 {
 public:
 	opnRectangle (
 		opnShader& shad_,
 		float width_ = 0.f, float height_ = 0.f,
-		float x_ = 0.f, float y_ = 0.f, float z_ = 0.f,
-		float r_= 1.f, float g_ = 1.f, float b_ = 1.f);
+		glm::vec3&& pos = {0.f,0.f,0.f},
+		glm::vec3&& color = {1.f,1.f,1.f});
+
 	~opnRectangle ();
 
-	void setPos (glm::vec3&& pos)
-	{
-		x = pos.x, y = pos.y, z = pos.z;
-	}
-
+	void setPos (glm::vec3&& pos_) { pos = pos_; }
+	void setPos (glm::vec2&& pos_) { pos.x = pos_.x, pos.y = pos_.y; }
+	void setDepth (float z_) { pos.z = z_; }
 	void draw ();
-
 	opnMat4 tr;
+
 private:
 	opnQuad quad;
 	opnShader* shad;
 	float width, height;
-	float x, y, z;
-	float r, g, b;
+	glm::vec3 pos;
+	glm::vec3 color;
 	float width_scale{1.f};
 	float height_scale{1.f};
 };

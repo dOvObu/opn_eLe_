@@ -3,11 +3,12 @@
 
 // GLEW
 #define GLEW_STATIC
+#define DGLEW_NO_GLU
 #include <GL/glew.h>
 // GLFW
 #include <GLFW/glfw3.h>
 
-#include "../opnMat4.h"
+#include "../drawable_objects/opnMat4.h"
 
 
 class opnCamera
@@ -20,10 +21,10 @@ public:
 
 	glm::vec3 pos {0.f, 0.f, 3.f};
 	glm::vec3 front {0.f, 0.f, 1.f};
-	glm::vec3 up {0.f, 1.f, 0.f};
+	glm::vec3 up () { return upVec; }
 
 	float dt = 0;
-	void loadTo (opnMat4& view) { view.tr = glm::lookAt (pos, pos + front, up); }
+	void loadTo (opnMat4& view) { view.tr = glm::lookAt (pos, pos + front, upVec); }
 
 	void framebuffer_size_callback (GLFWwindow* window, int&& width, int&& height) {
 		glViewport (0, 0, width, height);
@@ -31,6 +32,10 @@ public:
 
 	virtual void mouse_callback (GLFWwindow* window, double&& xpos, double&& ypos) = 0;
 	virtual void scroll_callback (GLFWwindow* window, double&& xoffset, double&& yoffset) = 0;
+	virtual ~opnCamera () {}
+
+private:
+	glm::vec3 upVec {0.f, 1.f, 0.f};
 };
 
 extern opnCamera* currentCamera;

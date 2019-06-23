@@ -11,7 +11,9 @@ public:
 	glm::mat4 tr;
 	opnMat4() :tr(1) {}
 	opnMat4& translate(float x, float y, float z) { tr = glm::translate(tr, glm::vec3(x, y, z)); return *this; }
+	opnMat4& translate (glm::vec3& v) { tr = glm::translate (tr, v); return *this; }
 	opnMat4& rotate(float angle, float xn, float yn, float zn) { tr = glm::rotate(tr, angle, glm::vec3(xn, yn, zn)); return *this; }
+	inline void setE () { tr = glm::mat4 (1); }
 };
 
 #endif

@@ -1,4 +1,6 @@
 #include "opnInput.h"
+#include "opnFreeCamera.h"
+#include "opnProfileCamera.h"
 
 bool opnInput::opn3Dmode = true;
 opnCamera* opnInput::freeCam = nullptr;
@@ -20,13 +22,20 @@ void opnInput::process (opnWindow& win)
 }
 
 
-
-
-void defaultSettings (opnWindow& win, opnCamera* free, opnCamera* profile)
+void opnInput::setCameras (opnCamera *freeCam_, opnCamera *profileCam_)
 {
-	opnInput::freeCam = free;
-	opnInput::profileCam = profile;
-	currentCamera = opnInput::freeCam;
+	freeCam = freeCam_;
+	profileCam = profileCam_;
+}
+
+
+void defaultSettings (opnWindow& win)
+{
+	static opnFreeCamera cam;
+	static opnProfileCamera cam2;
+
+	opnInput::setCameras (&cam, &cam2);
+	currentCamera = &cam;
 	win.alphaOn ();
 	win.setDefaultCallbacks ();
 	win.setCursorVisible (false);
